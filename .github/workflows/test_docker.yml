@@ -1,0 +1,26 @@
+---
+name: Test Docker images
+on:
+  push:
+    branches-ignore:
+      - "main"
+  pull_request:
+    branches-ignore:
+      - "main"
+
+env:
+  GH_TOKEN: ${{ secrets.token }}
+
+jobs:
+  test:
+    name: Test Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{ github.repository }} repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          token: ${{ env.GH_TOKEN }}
+      - name: Build dockerfile
+        run: docker build -t linode-cli -f Dockerfile .
