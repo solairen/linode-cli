@@ -21,9 +21,15 @@ jobs:
         with:
           username: ${{ secrets.docker_username }}
           password: ${{ secrets.docker_token }}
-      - name: Build and push
+      - name: Build and push with tag ${{ env.VER }}
         uses: docker/build-push-action@v2
         with:
           file: Dockerfile
           push: true
           tags: moleszek/linodecli:${{ env.VER }}
+      - name: Build and push with tag latest
+        uses: docker/build-push-action@v2
+        with:
+          file: Dockerfile
+          push: true
+          tags: moleszek/linodecli:latest
