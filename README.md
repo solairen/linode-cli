@@ -1,5 +1,5 @@
 ### About:
-* OS: private image based on alpine linux
+* OS: 3.10-slim
 
 This docker container contains:
 * [Linode CLI](https://www.linode.com/products/cli/)
