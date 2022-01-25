@@ -1,4 +1,4 @@
-FROM moleszek/flake:1.3
+FROM python:3.10-slim
 
 LABEL maintainer="mrsolairen@outlook.com"
 LABEL official_documentation="https://www.linode.com/products/cli/"
@@ -11,12 +11,6 @@ RUN pip3 install -r /packages/requirements.txt
 
 # Remove folder
 RUN rm -rf /packages
-
-# Create user
-RUN addgroup -S linode && adduser -S linode -G linode
-
-# Set user
-USER linode
 
 # Set workdir
 WORKDIR /home/linode
