@@ -10,6 +10,7 @@ env:
   DOCKER_USER: ${{ secrets.docker_username }}
   DOCKER_PASS: ${{ secrets.docker_token }}
   VER: ${{ github.event.inputs.version }}
+  DISCORD: ${{ secrets.DISCORD_WEBHOOK }}
 
 jobs:
   deploy:
@@ -33,3 +34,28 @@ jobs:
           file: Dockerfile
           push: true
           tags: moleszek/linodecli:latest
+  notify_on_success:
+    name: Send notification on success
+    needs:
+      - test
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ env.DISCORD }}
+          description: "Successfully built and push docker image to DockerHub!"
+  notify_on_failure:
+    name: Send notification on failure
+    needs:
+      - test
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ env.DISCORD }}
+          status: failure
+          description: "Failed to build and push docker image to DockerHub!"
