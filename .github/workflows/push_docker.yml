@@ -37,7 +37,7 @@ jobs:
   notify_on_success:
     name: Send notification on success
     needs:
-      - test
+      - deploy
     if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +49,7 @@ jobs:
   notify_on_failure:
     name: Send notification on failure
     needs:
-      - test
+      - deploy
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:
