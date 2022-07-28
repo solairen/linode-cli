@@ -1,1 +1,1 @@
-linode-cli==5.21.0
+linode-cli==5.22.0
